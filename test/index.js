@@ -81,6 +81,32 @@ describe('voltrevo-privacy', function() {
     assert(curr === SECRET);
   });
 
+  it('can wrap many different things, and the unwrap order doesn\'t matter', function() {
+    var privacy = Privacy();
+
+    var thingsToWrap = [
+      SECRET,
+      [],
+      {},
+      'foobar',
+      undefined,
+      37,
+      null,
+      global,
+      thingsToWrap,
+      [thingsToWrap],
+      privacy,
+      Privacy,
+      function() {}
+    ];
+
+    var wrappedThings = thingsToWrap.map(privacy.wrap);
+
+    [7, 1, 7, 6, 8, 12, 3, 2, 9, 1, 0, 10, 10, 11, 4, 4, 4, 5].forEach(function(i) {
+      assert(privacy.unwrap(wrappedThings[i]) === thingsToWrap[i]);
+    });
+  });
+
   it('wrapped objects are functions that we can\'t call without throwing', function() {
     var wrapped = Privacy().wrap(SECRET);
 
@@ -151,5 +177,60 @@ describe('voltrevo-privacy', function() {
         }
       });
     }));
+  });
+
+  it('spying on wrappedAsset causes throw', function() {
+    var privacy = Privacy();
+
+    assert(checkThrow(function() {
+      var wrappedAsset = privacy.wrap(SECRET);
+
+      var spy = function() {
+        return wrappedAsset.apply(this, arguments);
+      };
+
+      privacy.unwrap(spy);
+    }));
+  });
+
+  it('bad unwrap calls do not prevent subsequent wraps from working', function() {
+    var privacy = Privacy();
+
+    assert(checkThrow(function() {
+      privacy.unwrap(function() {});
+    }));
+
+    assert(privacy.unwrap(privacy.wrap(SECRET)) === SECRET);
+  });
+
+  it('using the privacy instance inside a bad unwrap call works', function() {
+    var privacy = Privacy();
+
+    var w1 = privacy.wrap(SECRET);
+
+    var completedChecks = false;
+
+    assert(checkThrow(function() {
+      privacy.unwrap(function() {
+        var self = this;
+        var spyArgs = arguments;
+        var spyResult = undefined;
+
+        assert(privacy.unwrap(w1) === SECRET);
+        assert(privacy.unwrap(privacy.wrap('foobar')) === 'foobar');
+
+        assert(checkThrow(function() {
+          spyResult = w1.apply(self, spyArgs);
+        }));
+
+        assert(privacy.unwrap(privacy.wrap(123)) === 123);
+
+        completedChecks = true;
+
+        return spyResult;
+      });
+    }));
+
+    assert(completedChecks);
   });
 });
