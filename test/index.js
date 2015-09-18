@@ -120,9 +120,6 @@ describe('voltrevo-privacy', function() {
     // This was a real exploit in the original design:
     // https://github.com/voltrevo/voltrevo-privacy/blob/263bbb1153/lib/index.js
 
-    // It's a bit of a technical exploit rather than a full one though, because it requires access
-    // to the privacy instance. It just wasn't supposed to be possible to get tags.in and tags.out.
-
     assert(checkThrow(function() {
       var privacy = Privacy();
 
