@@ -117,6 +117,12 @@ describe('voltrevo-privacy', function() {
   });
 
   it('isn\'t broken by spying on ._unwrap', function() {
+    // This was a real exploit in the original design:
+    // https://github.com/voltrevo/voltrevo-privacy/blob/263bbb1153/lib/index.js
+
+    // It's a bit of a technical exploit rather than a full one though, because it requires access
+    // to the privacy instance. It just wasn't supposed to be possible to get tags.in and tags.out.
+
     assert(checkThrow(function() {
       var privacy = Privacy();
 
@@ -128,9 +134,11 @@ describe('voltrevo-privacy', function() {
       var actualUnwrap = legitWrapped._unwrap;
 
       legitWrapped._unwrap = function(tag) {
-        inTag = tag;
         var result = actualUnwrap.apply(this, arguments);
+
+        inTag = tag;
         outTag = result.tag;
+
         return result;
       };
 
