@@ -139,6 +139,10 @@ describe('voltrevo-privacy', function() {
         return result;
       };
 
+      // Having to use the privacy instance might seem like a weakness in the exploit, but we only
+      // need to wait for unwrap to be called elsewhere. Since we have the wrapped object, the whole
+      // point is that we can send it to someone who can unwrap it, so getting someone to call
+      // unwrap would typically be easy.
       privacy.unwrap(legitWrapped);
 
       // If this exploit works, ._unwrap doesn't throw here
