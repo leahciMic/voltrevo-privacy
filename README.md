@@ -17,7 +17,7 @@ $ npm install --save voltrevo-privacy
 var Privacy = require('voltrevo-privacy');
 var someOtherLib = require('some-other-lib');
 
-var privacy = Privacy(); // create instance
+var privacy = Privacy(); // Create instance.
 
 var SECRET = {};
 
