@@ -27,9 +27,10 @@ someOtherLib.add(
 );
 
 someOtherLib.later(function(stuff) {
-  // The only way to get SECRET back is using privacy.unwrap. Even though someOtherLib clearly
-  // had stuff, and it is impossible for someOtherLib to get SECRET, as long as stuff is the
-  // thing we gave someOtherLib earlier, this will work:
+  // The only way to get SECRET back is using privacy.unwrap. Even though
+  // someOtherLib clearly had stuff, and it is impossible for someOtherLib to
+  // get SECRET, as long as stuff is the thing we gave someOtherLib earlier,
+  // this will work:
   assert(privacy.unwrap(stuff) === SECRET);
 });
 ```
