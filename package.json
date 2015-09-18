@@ -1,6 +1,6 @@
 {
   "name": "voltrevo-privacy",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Controls access to objects by securely wrapping and unwrapping them",
   "homepage": "",
   "repository": "voltrevo/voltrevo-privacy",
