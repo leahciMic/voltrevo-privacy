@@ -1,4 +1,4 @@
-# voltrevo-privacy [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Code Climate](https://codeclimate.com/github/voltrevo/voltrevo-privacy/badges/gpa.svg)](https://codeclimate.com/github/voltrevo/voltrevo-privacy)
+# voltrevo-privacy [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Code Climate](https://codeclimate.com/github/voltrevo/voltrevo-privacy/badges/gpa.svg)](https://codeclimate.com/github/voltrevo/voltrevo-privacy) [![Test Coverage](https://codeclimate.com/github/voltrevo/voltrevo-privacy/badges/coverage.svg)](https://codeclimate.com/github/voltrevo/voltrevo-privacy/coverage)
 > Controls access to objects by securely wrapping and unwrapping them
 
 
