@@ -12,9 +12,26 @@ $ npm install --save voltrevo-privacy
 ## Usage
 
 ```js
-var voltrevoPrivacy = require('voltrevo-privacy');
+'use strict';
 
-voltrevoPrivacy('Rainbow');
+var Privacy = require('voltrevo-privacy');
+var someOtherLib = require('some-other-lib');
+
+var privacy = Privacy(); // create instance
+
+var SECRET = {};
+
+someOtherLib.add(
+  // It is impossible for someOtherLib to get SECRET.
+  privacy.wrap(SECRET)
+);
+
+someOtherLib.later(function(stuff) {
+  // The only way to get SECRET back is using privacy.unwrap. Even though someOtherLib clearly
+  // had stuff, and it is impossible for someOtherLib to get SECRET, as long as stuff is the
+  // thing we gave someOtherLib earlier, this will work:
+  assert(privacy.unwrap(stuff) === SECRET);
+});
 ```
 
 ## License
