@@ -2,3 +2,6 @@ language: node_js
 node_js:
   - '0.12'
   - 'iojs'
+addons:
+  code_climate:
+    repo_token: 51ba0bc21193a02da1b8f9dd70bb101a7b5384293bf584d12a1f0ec1a6c20e36
