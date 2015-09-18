@@ -81,8 +81,10 @@ describe('voltrevo-privacy', function() {
     assert(curr === SECRET);
   });
 
-  it('wrapped objects have a ._unwrap that we can\'t call without throwing', function() {
-    var _unwrap = Privacy().wrap(SECRET);
+  it('wrapped objects are functions that we can\'t call without throwing', function() {
+    var wrapped = Privacy().wrap(SECRET);
+
+    assert(typeof wrapped === 'function');
 
     [
       [],              // No args
@@ -92,10 +94,10 @@ describe('voltrevo-privacy', function() {
       [1, 2, 3, 4, 5], // Lots of args
       [Privacy],       // This would be weird
       [Privacy()],     // So would this
-      [_unwrap]        // And this
+      [wrapped]        // And this
     ].forEach(function(fakeKeys) {
       assert(checkThrow(function() {
-        var output = _unwrap.apply(undefined, fakeKeys);
+        var output = wrapped.apply(undefined, fakeKeys);
         assert(output !== SECRET); // Shouldn't reach here anyway
       }));
     });
@@ -103,16 +105,7 @@ describe('voltrevo-privacy', function() {
 
   it('unwrap throws when we try to pass it a fake wrapped object', function() {
     assert(checkThrow(function() {
-      Privacy().unwrap({
-        _unwrap: function(tag) {
-          assert(tag !== undefined);
-
-          return {
-            tag: {},
-            asset: 'foo'
-          };
-        }
-      });
+      Privacy().unwrap(function() {});
     }));
   });
 
